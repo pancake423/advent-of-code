@@ -14,7 +14,7 @@ year = input("year=")
 try:
     os.mkdir(year)
 except FileExistsError:
-    print(f"Folder '{year}' already exists. Days that already have a folder will be ignored.")
+    print(f"Folder '{year}' already exists. Blank input files will be created, but scripts won't be overwritten.")
 
 for i in range(25):
     path = os.path.join(year, "day_" + str(i+1))
@@ -22,7 +22,7 @@ for i in range(25):
         os.mkdir(path)
         shutil.copy(TEMPLATE, path)
         os.rename(os.path.join(path, TEMPLATE), os.path.join(path, SCRIPT_NAME))
-        for filename in TXT_FILES:
-            open(os.path.join(path, filename), "w").close()
     except FileExistsError:
-        print(f"ignored existing folder for day {i+1}.")
+        pass
+    for filename in TXT_FILES:
+        open(os.path.join(path, filename), "w").close()
