@@ -25,4 +25,4 @@ for i in range(25):
         for filename in TXT_FILES:
             open(os.path.join(path, filename), "w").close()
     except FileExistsError:
-        print(f"ignoring existing folder for day {i+1}...")
+        print(f"ignored existing folder for day {i+1}.")
