@@ -1,23 +1,31 @@
-import math
+import time
+import solution as sln
 
-example_data = None
-data = None
+def read_file(filename):
+    raw = None
+    with open(filename) as f:
+        raw = f.read()
+    lines = raw.strip().split("\n")
+    grid = [[c for c in line.strip()] for line in lines]
+    return raw, lines, grid
 
-with open("example.txt") as f:
-    example_data = f.readlines()
-with open("input.txt") as f:
-    data = f.readlines()
-
-
-def part_one(data):
-    pass
-
-def part_two(data):
-    pass
-
+def run(msg, func, filename):
+    data = read_file(filename)
+    # cancel if data is all whitespace
+    if len(data[0].strip()) == 0:
+        return
+    t0 = time.perf_counter()
+    res = func(*data)
+    t1 = time.perf_counter()
+    # cancel if function does not return a value
+    if res == None:
+        return
+    print(msg, end=" ")
+    print(res)
+    print("\t" + f"[ran in {int((t1 - t0)*1000)}ms.]")
 
 if __name__ == "__main__":
-    print("Part one (example input):", part_one(example_data))
-    # print("Part one (full input):", part_one(data))
-    # print("Part two (example input):", part_two(example_data))
-    # print("Part two (full input):", part_two(data))
+    run("Part one (example input)", sln.part_one, "example.txt")
+    run("Part one (full input)", sln.part_one, "input.txt")
+    run("Part two (example input)", sln.part_two, "example.txt")
+    run("Part two (full input)", sln.part_two, "input.txt")

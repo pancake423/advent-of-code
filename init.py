@@ -6,9 +6,11 @@
 import os
 import shutil
 
-TEMPLATE = "template.py"
-SCRIPT_NAME = "main.py"
-TXT_FILES = ["example.txt", "input.txt"]
+TEMPLATES = (
+    ("template_main.py", "main.py"),
+    ("template_sln.py", "solution.py")
+)
+TXT_FILES = ("example.txt", "input.txt")
 
 year = input("year=")
 try:
@@ -20,8 +22,9 @@ for i in range(25):
     path = os.path.join(year, "day_" + str(i+1))
     try:
         os.mkdir(path)
-        shutil.copy(TEMPLATE, path)
-        os.rename(os.path.join(path, TEMPLATE), os.path.join(path, SCRIPT_NAME))
+        for (template, name) in TEMPLATES:
+            shutil.copy(template, path)
+            os.rename(os.path.join(path, template), os.path.join(path, name))
     except FileExistsError:
         pass
     for filename in TXT_FILES:
