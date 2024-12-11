@@ -14,7 +14,7 @@ year = input("year=")
 try:
     os.mkdir(year)
 except FileExistsError:
-    print(f"Folder '{year}' already exists. Blank input files will be created, but existing scripts won't be overwritten.")
+    print(f"Folder '{year}' already exists. Missing days and input files will be created, but existing scripts won't be overwritten.")
 
 for i in range(25):
     path = os.path.join(year, "day_" + str(i+1))
@@ -25,4 +25,4 @@ for i in range(25):
     except FileExistsError:
         pass
     for filename in TXT_FILES:
-        open(os.path.join(path, filename), "w").close()
+        open(os.path.join(path, filename), "a").close()
