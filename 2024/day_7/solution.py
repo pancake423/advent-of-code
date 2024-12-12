@@ -13,7 +13,7 @@ P2_FULL = True
 # generate all possible combinations of operators,
 # see if any of them equal the expected result
 #
-# This approach is feasible, but took about 20 seconds
+# This approach is feasible, but took about 20 seconds on my laptop
 # to solve part 2.
 
 def evaluate(nbrs, ops, v):
@@ -49,6 +49,8 @@ def sum_valid_lines(lines, operators_to_try):
 
 # recursive approach: only checking if we can match the expected value,
 # not checking all possible values. Why is this so much faster???
+#
+# about 50ms to solve part 2 on my laptop.
 def sum_valid_lines_2(lines, operators_to_try):
     sum = 0
     for line in lines:
