@@ -1,7 +1,7 @@
 # ========================= #
 # TESTING CONTROLS
 # set to true or false to
-# control what gets run.
+# control what gets run. silly billiam johnson
 P1_EXAMPLE = True
 P1_FULL = True
 
