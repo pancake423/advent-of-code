@@ -51,7 +51,7 @@ def part_one(raw, lines, grid):
     return safety_score(robots, w, h)
 
 
-def n_groups(robots):
+def largest_group(robots):
     def get_first(s):
         for x in s:
             break
@@ -77,11 +77,12 @@ def n_groups(robots):
         return out
 
     s = set([tuple(r[0]) for r in robots])
-    groups = 0
+    max_score = 0
     while len(s) > 0:
-        flood_fill(s, get_first(s))
-        groups += 1
-    return groups
+        score = len(flood_fill(s, get_first(s)))
+        if score > max_score:
+            max_score = score
+    return max_score
 
 def part_two(raw, lines, grid):
     # how on earth to detect a picture??
@@ -90,15 +91,15 @@ def part_two(raw, lines, grid):
     h = 103
     robots = [parse_line(line) for line in lines]
     n = 10000 # search depth, should be sufficient? (at least it is for mine)
-    min_score = len(robots)*2
-    min_loc = 0
+    max_score = 0
+    max_loc = 0
     pic = draw_scene(robots, w, h)
     for i in range(n):
         robots = [step_robot(r, w, h) for r in robots]
-        groups = n_groups(robots)
-        if groups < min_score:
-            min_score = groups
-            min_loc = i + 1
+        score = largest_group(robots)
+        if score > max_score:
+            max_score = score
+            max_loc = i + 1
             pic = draw_scene(robots, w, h)
     print(pic)
-    return min_loc
+    return max_loc
