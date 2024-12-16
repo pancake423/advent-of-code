@@ -3,12 +3,17 @@
 # set to true or false to
 # control what gets run.
 P1_EXAMPLE = False
-P1_FULL = False
+P1_FULL = True
 
 P2_EXAMPLE = False
 P2_FULL = True
 # ========================= #
-
+d_lookup = {
+    "^": (-1, 0),
+    "v": (1, 0),
+    ">": (0, 1),
+    "<": (0, -1),
+}
 
 def print_grid(g):
     for l in g:
@@ -31,16 +36,9 @@ def find_robot(grid):
 
 def step(grid, char, robot_loc):
     # figure out what direction we're moving
-    d_lookup = {
-        "^": (-1, 0),
-        "v": (1, 0),
-        ">": (0, 1),
-        "<": (0, -1),
-    }
     d = d_lookup[char]
-    # start at robot's position
-    # continue stepping in direction D until we hit a wall
-    # or empty space tile.
+    # start at robot's position continue stepping in
+    # direction D until we hit a wall or empty space tile.
     can_move = False
     i, j = robot_loc
     visited = []
@@ -80,7 +78,7 @@ def part_one(raw, lines, grid):
     robot_loc = find_robot(g)
     for move in m:
         robot_loc = step(g, move, robot_loc)
-    print_grid(g)
+    # print_grid(g)
     return gps(g)
 
 def expand(grid):
@@ -93,12 +91,6 @@ def expand(grid):
     return [[n for c in row for n in transform[c]] for row in grid]
 
 def p2_step(grid, char, robot_loc):
-    d_lookup = {
-        "^": (-1, 0),
-        "v": (1, 0),
-        ">": (0, 1),
-        "<": (0, -1),
-    }
     d = d_lookup[char]
     tiles_to_move = [[*robot_loc, False]]
     l = 0
@@ -109,9 +101,7 @@ def p2_step(grid, char, robot_loc):
             if tile[2]:
                 continue
             tile[2] = True
-            i, j, _ = tile
-            i += d[0]
-            j += d[1]
+            i, j = tile[0] + d[0], tile[1] + d[1]
             if grid[i][j] == "[":
                 tiles_to_move.append([i, j, False])
                 if d[1] == 0:
@@ -126,23 +116,19 @@ def p2_step(grid, char, robot_loc):
     # or an empty space in front of it.
     can_move = True
     for tile in tiles:
-        i, j = tile
-        i += d[0]
-        j += d[1]
-        if (i, j) in tiles:
-            continue
-        if grid[i][j] == ".":
+        i, j = tile[0] + d[0], tile[1] + d[1]
+        if (i, j) in tiles or grid[i][j] == ".":
             continue
         can_move = False
     # move the tiles, if allowed
     if not can_move:
         return robot_loc
+
     tiles = [(i, j, grid[i][j]) for i, j in tiles]
     for i, j, _ in tiles:
         grid[i][j] = "."
     for i, j, c in tiles:
         grid[i + d[0]][j + d[1]] = c
-
 
     return robot_loc[0] + d[0], robot_loc[1] + d[1]
 
@@ -155,7 +141,6 @@ def part_two(raw, lines, grid):
     g = expand(g)
     robot_loc = find_robot(g)
     #print_grid(g)
-
     for move in m:
         robot_loc = p2_step(g, move, robot_loc)
         #print_grid(g)
