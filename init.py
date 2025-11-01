@@ -13,12 +13,13 @@ TEMPLATES = (
 TXT_FILES = ("example.txt", "input.txt")
 
 year = input("year=")
+puzzles_per_year = int(input("puzzles per year="))
 try:
     os.mkdir(year)
 except FileExistsError:
     print(f"Folder '{year}' already exists. Missing days and input files will be created, but existing scripts won't be overwritten.")
 
-for i in range(25):
+for i in range(puzzles_per_year):
     path = os.path.join(year, "day_" + str(i+1))
     try:
         os.mkdir(path)
