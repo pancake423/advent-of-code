@@ -4,6 +4,10 @@ this project contains my solutions to some of the advent of code puzzles.
 I write them in whatever language I'm trying to get better at at the time,
 or Python if the only goal is solving the puzzles quickly.
 
+# Why are there no input files?
+
+Because the puzzle creators have asked us not to. see [the FAQ](https://adventofcode.com/2025/about#faq_copying)
+
 # Progress by year
 
 ## 2022
